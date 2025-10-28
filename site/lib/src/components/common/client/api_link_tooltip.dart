@@ -71,16 +71,19 @@ class _InteractiveApiLinkState extends State<ApiLinkTooltip> {
   void ensureVisible() {
     final tooltip = tooltipKey.currentNode;
     if (tooltip == null) return;
-    final containerRect = tooltip.closest('.content')!.getBoundingClientRect();
+
     final tooltipRect = tooltip.getBoundingClientRect();
+    final containerRect = tooltip.closest('.content')?.getBoundingClientRect();
 
     final tooltipLeft = tooltipRect.left - tooltipOffset;
     final tooltipRight = tooltipRect.right - tooltipOffset;
+    final containerLeft = containerRect?.left ?? 0.0;
+    final containerRight = containerRect?.right ?? web.window.innerWidth;
 
-    if (tooltipLeft < containerRect.left) {
-      setState(() => tooltipOffset = containerRect.left - tooltipLeft);
-    } else if (tooltipRight > containerRect.right) {
-      setState(() => tooltipOffset = containerRect.right - tooltipRight);
+    if (tooltipLeft < containerLeft) {
+      setState(() => tooltipOffset = containerLeft - tooltipLeft);
+    } else if (tooltipRight > containerRight) {
+      setState(() => tooltipOffset = containerRight - tooltipRight);
     } else {
       setState(() => tooltipOffset = 0.0);
     }
@@ -130,8 +133,10 @@ class _InteractiveApiLinkState extends State<ApiLinkTooltip> {
         events: {
           if (isTouchscreen)
             'click': (event) {
-              setState(() => isVisible = !isVisible);
-              event.preventDefault();
+              if (!isVisible) {
+                setState(() => isVisible = true);
+                event.preventDefault();
+              }
             },
         },
         [
@@ -154,9 +159,14 @@ Future<(String?, String?)> scrapeApiDocs(String url) async {
     final response = await http.get(Uri.parse(url));
     var content = response.body;
 
-    content = content.substring(
-      content.indexOf(RegExp('<div\\s+id="$contentId"')),
-    );
+    final startIndex = content.indexOf(RegExp('<div\\s+id="$contentId"'));
+    if (startIndex == -1) {
+      print(
+        'Error fetching API docs for $url: content id "$contentId" not found.',
+      );
+      return (null, null);
+    }
+    content = content.substring(startIndex);
 
     final element =
         web.document.createElement('template') as web.HTMLTemplateElement;
