@@ -46,6 +46,10 @@ class _InteractiveApiLinkState extends State<ApiLinkTooltip> {
       component.url,
     );
 
+    if (extractedHeader == null && extractedDescription == null) {
+      return;
+    }
+
     if (!mounted) return;
     setState(() {
       tooltipContent = fragment([
@@ -131,7 +135,7 @@ class _InteractiveApiLinkState extends State<ApiLinkTooltip> {
         href: component.url,
         classes: 'tooltip-target',
         events: {
-          if (isTouchscreen)
+          if (tooltipContent != null && isTouchscreen)
             'click': (event) {
               if (!isVisible) {
                 setState(() => isVisible = true);
