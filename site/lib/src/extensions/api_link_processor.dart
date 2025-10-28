@@ -31,7 +31,7 @@ class ApiLinkProcessor implements PageExtension {
         ]) {
           // Only enable the tooltip for links that contain a code element.
           processedNodes.add(
-            ComponentNode(ApiLinkTooltip(url: href, text: text))
+            ComponentNode(ApiLinkTooltip(url: href, text: text)),
           );
           continue;
         } else {
