@@ -2,7 +2,8 @@
   position: relative;
 
   a.tooltip-target:has(+.tooltip) {
-    text-decoration: underline dotted;
+    text-decoration: underline;
+    text-decoration-style: dotted;
   }
 
   .tooltip {
