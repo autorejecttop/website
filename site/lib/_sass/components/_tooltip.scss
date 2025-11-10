@@ -6,6 +6,10 @@
     text-decoration-style: dotted;
   }
 
+  a.tooltip-target[href*="glossary"] {
+    color: inherit;
+  }
+
   .tooltip {
     visibility: hidden;
 
@@ -17,7 +21,7 @@
     transform: translateX(-50%);
 
     flex-flow: column nowrap;
-    width: 20rem;
+    width: 16rem;
 
     background: var(--site-raised-bgColor);
     border: 0.05rem solid rgba(0, 0, 0, .125);
@@ -28,6 +32,10 @@
     font-size: 1rem;
     font-weight: normal;
     font-style: normal;
+
+    &.large {
+      width: 20rem;
+    }
 
     .tooltip-header {
       font-size: 1.2rem;
@@ -58,5 +66,4 @@
       visibility: visible;
     }
   }
-
 }

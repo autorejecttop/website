@@ -31,10 +31,12 @@ import 'package:docs_flutter_dev_site/src/components/layout/theme_switcher.dart'
     as prefix11;
 import 'package:docs_flutter_dev_site/src/components/pages/archive_table.dart'
     as prefix12;
-import 'package:docs_flutter_dev_site/src/components/pages/learning_resource_filters.dart'
+import 'package:docs_flutter_dev_site/src/components/pages/glossary_search_section.dart'
     as prefix13;
-import 'package:docs_flutter_dev_site/src/components/pages/learning_resource_filters_sidebar.dart'
+import 'package:docs_flutter_dev_site/src/components/pages/learning_resource_filters.dart'
     as prefix14;
+import 'package:docs_flutter_dev_site/src/components/pages/learning_resource_filters_sidebar.dart'
+    as prefix15;
 
 /// Default [JasprOptions] for use with your jaspr project.
 ///
@@ -112,13 +114,18 @@ JasprOptions get defaultJasprOptions => JasprOptions(
       params: _prefix12ArchiveTable,
     ),
 
-    prefix13.LearningResourceFilters:
-        ClientTarget<prefix13.LearningResourceFilters>(
+    prefix13.GlossarySearchSection:
+        ClientTarget<prefix13.GlossarySearchSection>(
+          'src/components/pages/glossary_search_section',
+        ),
+
+    prefix14.LearningResourceFilters:
+        ClientTarget<prefix14.LearningResourceFilters>(
           'src/components/pages/learning_resource_filters',
         ),
 
-    prefix14.LearningResourceFiltersSidebar:
-        ClientTarget<prefix14.LearningResourceFiltersSidebar>(
+    prefix15.LearningResourceFiltersSidebar:
+        ClientTarget<prefix15.LearningResourceFiltersSidebar>(
           'src/components/pages/learning_resource_filters_sidebar',
         ),
   },

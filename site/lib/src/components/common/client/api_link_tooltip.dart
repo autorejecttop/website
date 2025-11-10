@@ -8,6 +8,7 @@ import 'package:meta/meta.dart';
 import 'package:universal_web/js_interop.dart';
 import 'package:universal_web/web.dart' as web;
 
+import '../../../client/global_scripts.dart';
 import '../../../util.dart';
 import '../../util/global_event_listener.dart';
 
@@ -24,6 +25,7 @@ class ApiLinkTooltip extends StatefulComponent {
 
 class _InteractiveApiLinkState extends State<ApiLinkTooltip> {
   final wrapperKey = GlobalNodeKey<web.HTMLElement>();
+  final targetKey = GlobalNodeKey<web.HTMLElement>();
   final tooltipKey = GlobalNodeKey<web.HTMLElement>();
   Component? tooltipContent;
 
@@ -73,24 +75,13 @@ class _InteractiveApiLinkState extends State<ApiLinkTooltip> {
   /// Adjust the tooltip position to ensure it is fully inside the
   /// ancestor .content element.
   void ensureVisible() {
+    final target = targetKey.currentNode;
     final tooltip = tooltipKey.currentNode;
-    if (tooltip == null) return;
+    if (tooltip == null || target == null) return;
 
-    final tooltipRect = tooltip.getBoundingClientRect();
-    final containerRect = tooltip.closest('.content')?.getBoundingClientRect();
-
-    final tooltipLeft = tooltipRect.left - tooltipOffset;
-    final tooltipRight = tooltipRect.right - tooltipOffset;
-    final containerLeft = containerRect?.left ?? 0.0;
-    final containerRight = containerRect?.right ?? web.window.innerWidth;
-
-    if (tooltipLeft < containerLeft) {
-      setState(() => tooltipOffset = containerLeft - tooltipLeft);
-    } else if (tooltipRight > containerRight) {
-      setState(() => tooltipOffset = containerRight - tooltipRight);
-    } else {
-      setState(() => tooltipOffset = 0.0);
-    }
+    setState(() {
+      tooltipOffset = calculateTooltipOffset(target, tooltip);
+    });
   }
 
   @override
@@ -100,12 +91,12 @@ class _InteractiveApiLinkState extends State<ApiLinkTooltip> {
     if (tooltipContent != null) {
       tooltip = span(
         key: tooltipKey,
-        classes: ['tooltip', if (isVisible) 'visible'].toClasses,
+        classes: ['tooltip', 'large', if (isVisible) 'visible'].toClasses,
         styles: Styles(
           raw: {
             'left': tooltipOffset == 0
                 ? '50%'
-                : 'calc(50% + ${tooltipOffset}px)',
+                : 'calc(50% ${tooltipOffset > 0 ? '+' : '-'} ${tooltipOffset.abs()}px)',
           },
         ),
         [tooltipContent!],
@@ -132,6 +123,7 @@ class _InteractiveApiLinkState extends State<ApiLinkTooltip> {
 
     return span(key: wrapperKey, classes: 'tooltip-wrapper', [
       a(
+        key: targetKey,
         href: component.url,
         classes: 'tooltip-target',
         events: {

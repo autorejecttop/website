@@ -14,16 +14,18 @@ a {
   }
 
   &:visited {
-    color:var(--site-link-fgColor);
+    color: var(--site-link-fgColor);
   }
 }
 
-a, button {
+a,
+button {
   text-decoration: none;
   background: none;
   cursor: pointer;
 
-  &.filled-button, &.text-button {
+  &.filled-button,
+  &.text-button {
     display: flex;
     align-items: center;
     width: fit-content;
@@ -33,7 +35,7 @@ a, button {
     font-weight: 500;
     font-family: var(--site-ui-fontFamily);
     gap: 0.3rem;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.9rem;
     text-decoration: none;
     cursor: pointer;
   }
@@ -43,6 +45,11 @@ a, button {
     color: var(--site-filledButton-fgColor);
     outline-offset: 2px;
     user-select: none;
+
+    span.material-symbols {
+      font-variation-settings: 'FILL' 1;
+      font-size: 20px;
+    }
 
     &:hover {
       @include mixins.interaction-style(8%);
@@ -78,7 +85,7 @@ a, button {
     -webkit-user-select: none;
     background: none;
 
-    > span {
+    >span {
       font-size: 1.75rem;
     }
 

@@ -13,6 +13,10 @@ class ApiLinkProcessor implements PageExtension {
 
   @override
   Future<List<Node>> apply(Page page, List<Node> nodes) async {
+    if (page.data.page['showApiLinkTooltips'] == false) {
+      return nodes;
+    }
+
     return _processNodes(nodes);
   }
 

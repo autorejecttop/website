@@ -9,7 +9,7 @@ This page has release notes for 3.13.0.
 For information about subsequent bug-fix releases,
 see our [CHANGELOG][].
 
-[CHANGELOG]: {{site.repo.flutter}}/blob/main/CHANGELOG.md
+[CHANGELOG]: https://github.com/flutter/flutter/blob/main/CHANGELOG.md
 
 ## Framework
 
@@ -812,4 +812,3 @@ see our [CHANGELOG][].
 * @mk12 made their first contribution in [42667](https://github.com/flutter/engine/pull/42667)
 
 **Full Changelog**: https://github.com/flutter/engine/compare/3.10.0...3.13.0
-

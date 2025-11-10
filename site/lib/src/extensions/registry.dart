@@ -7,6 +7,7 @@ import 'package:jaspr_content/jaspr_content.dart';
 import 'api_link_processor.dart';
 import 'attribute_processor.dart';
 import 'code_block_processor.dart';
+import 'glossary_link_processor.dart';
 import 'header_extractor.dart';
 import 'header_processor.dart';
 import 'table_processor.dart';
@@ -19,5 +20,6 @@ const List<PageExtension> allNodeProcessingExtensions = [
   HeaderWrapperExtension(),
   TableWrapperExtension(),
   CodeBlockProcessor(),
+  GlossaryLinkProcessor(),
   ApiLinkProcessor(),
 ];
